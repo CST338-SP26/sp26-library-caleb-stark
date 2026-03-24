@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Reader {
-    public static final int NAME_=0;
-    public static final int PHONE_=1;
-    public static final int BOOK_COUNT_=2;
-    public static final int CARD_NUMBER_=3;
+    public static final int CARD_NUMBER_=0;
+    public static final int NAME_=1;
+    public static final int PHONE_=2;
+    public static final int BOOK_COUNT_=3;
     public static final int BOOK_START_=4;
 
     private int cardNumber;
@@ -24,22 +24,18 @@ public class Reader {
     }
 
     public Code addBook(Book book) {
-        if (!books.isEmpty()) {
-            for (Book i : books) {
-                if (i.equals(book)) {
-                    return Code.BOOK_ALREADY_CHECKED_OUT_ERROR;
-                }
+        for (Book i : books) {
+            if (i.equals(book)) {
+                return Code.BOOK_ALREADY_CHECKED_OUT_ERROR;
             }
-        } else {
-            books.add(book);
-            return Code.SUCCESS;
         }
-        return Code.BOOK_COUNT_ERROR;
+        books.add(book);
+        return Code.SUCCESS;
     }
 
     public Code removeBook(Book book){
-        for(Book i : books){
-            if(i.equals(book)){
+        for(int i=0; i<books.size(); i++){
+            if(books.get(i).equals(book)){
                 books.remove(i);
                 return Code.SUCCESS;
             }
@@ -108,6 +104,6 @@ public class Reader {
 
     @Override
     public String toString() {
-        return String.format("%s (#%s) has checked out {%s}", name, cardNumber, books);
+        return String.format("%s (#%s) has checked out %s", name, cardNumber, books);
     }
 }
