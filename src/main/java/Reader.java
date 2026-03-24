@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/*
+ * Abstract: Controls the reader class which stores people with there information
+ * and what books they are reading
+ * Name: Caleb Stark
+ * Date: 03/24/2026
+ */
+
 public class Reader {
     public static final int CARD_NUMBER_=0;
     public static final int NAME_=1;
@@ -20,7 +27,6 @@ public class Reader {
         setCardNumber(cardNumber);
         setName(name);
         setPhone(phone);
-
     }
 
     public Code addBook(Book book) {
