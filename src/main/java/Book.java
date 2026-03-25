@@ -9,12 +9,12 @@ public class Book {
     public static final int AUTHOR_=4;
     public static final int DUE_DATE_=5;
 
+    private String isbn;
+    private String title;
+    private String subject;
+    private int pageCount;
     private String author;
     private LocalDate dueDate;
-    private String isbn;
-    private int pageCount;
-    private String subject;
-    private String title;
 
     public Book(String isbn, String title, String subject, int pageCount, String author, LocalDate dueDate){
         setISBN(isbn);
