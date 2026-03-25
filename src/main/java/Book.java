@@ -1,6 +1,13 @@
 import java.time.LocalDate;
 import java.util.Objects;
 
+/*
+ * Abstract: Controls the book class which handles all information around
+ * books (book object).
+ * Name: Caleb Stark
+ * Date: 03/24/2026
+ */
+
 public class Book {
     public static final int ISBN_=0;
     public static final int TITLE_=1;
