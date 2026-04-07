@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 /*
- * Abstract:
+ * Abstract: controls the library so it's the hirarchy of the program takes in a file with
+ * data for a library and creates shelves for subjects people can also check out books.
  * Name: Caleb Stark
  * Date: 04/06/2026
  */
@@ -32,12 +33,10 @@ public class Library {
         }else{
             books.put(book, 1);
         }
-
-        if(shelves.containsKey(book.getSubject())){
-            shelves.get(book.getSubject()).addBook(book);
-            return Code.SUCCESS;
+        Shelf shelf = shelves.get(book.getSubject());
+        if(shelf != null){
+            return shelf.addBook(book);
         }
-
         return Code.SHELF_EXISTS_ERROR;
     }
 
@@ -66,6 +65,14 @@ public class Library {
             return Code.SHELF_EXISTS_ERROR;
         }
         shelves.put(shelf.getSubject(), shelf);
+        for(Book book : books.keySet()){
+            if(book.getSubject().equals(shelf.getSubject())){
+                int count = books.get(book);
+                for(int i = 0; i < count; i++){
+                    shelf.addBook(book);
+                }
+            }
+        }
         return Code.SUCCESS;
     }
 
@@ -84,17 +91,24 @@ public class Library {
         if(!books.containsKey(book)){
             return Code.BOOK_NOT_IN_INVENTORY_ERROR;
         }
-        if(!shelves.containsKey(book.getSubject())){
+        Shelf shelf = shelves.get(book.getSubject());
+        if(shelf == null){
             return Code.SHELF_EXISTS_ERROR;
         }
-        if(shelves.get(book.getSubject()).getBookCount(book) < 1){
+        if(shelf.getBookCount(book) == -1){
+            int count = books.get(book);
+            for(int i = 0; i < count; i++){
+                shelf.addBook(book);
+            }
+        }
+        if(shelf.getBookCount(book) < 1){
             return Code.BOOK_NOT_IN_INVENTORY_ERROR;
         }
         Code code = reader.addBook(book);
         if(code != Code.SUCCESS){
             return code;
         }
-        return shelves.get(book.getSubject()).removeBook(book);
+        return shelf.removeBook(book);
     }
 
     public static LocalDate convertDate(String s, Code c){
@@ -239,7 +253,7 @@ public class Library {
                 return Code.PAGE_COUNT_ERROR;
             }
             LocalDate dueDate = convertDate(lineBook[Book.DUE_DATE_], Code.DATE_CONVERSION_ERROR);
-            Book book = new Book(lineBook[Book.ISBN_], lineBook[Book.TITLE_], lineBook[Book.SUBJECT_], pageCount, lineBook[Book.AUTHOR_], dueDate);
+            Book book = new Book(lineBook[Book.ISBN_], lineBook[Book.TITLE_], lineBook[Book.SUBJECT_], pageCount, lineBook[Book.AUTHOR_], dueDate   );
             if(books.containsKey(book)){
                 books.put(book, books.get(book) + 1);
             }else{
