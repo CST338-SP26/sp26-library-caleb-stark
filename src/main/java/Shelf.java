@@ -3,6 +3,13 @@ import Utilities.Code;
 import java.util.HashMap;
 import java.util.Objects;
 
+/*
+ * Abstract: Controls the shelf class which stores books and their amount
+ * Name: Caleb Stark
+ * Date: 03/24/2026
+ */
+
+
 public class Shelf {
     public static final int SHELF_NUMBER_=0;
     public static final int SUBJECT_=1;
